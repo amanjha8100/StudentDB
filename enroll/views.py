@@ -6,14 +6,17 @@ def index(request):
     context = {}
     form = UserForm()
     obj = User.objects.all()
-    if request.method == "POST":
-        form = UserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            #return redirect('index')
-            return render(request,'enroll/index.html',{'form':form,'obj':obj})
-        else:
-            return render(request,'enroll/index.html',{'form':form,'obj':obj})
+    # if request.method == "POST":
+    #     form = UserForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         #return redirect('index')
+    #         return render(request,'enroll/index.html',{'form':form,'obj':obj})
+    #     else:
+    #         return render(request,'enroll/index.html',{'form':form,'obj':obj})
 
     
     return render(request,'enroll/index.html',{'form':form,'obj':obj})
+
+def add(request):
+    pass

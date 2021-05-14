@@ -93,5 +93,7 @@
         <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
         <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+        {% block javascript %}
+        {% endblock %}
       </body>
 </html>
