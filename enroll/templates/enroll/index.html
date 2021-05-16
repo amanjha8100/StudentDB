@@ -1,14 +1,19 @@
 {% extends 'main.html' %}
 
 {% block css %}
+<style>
+.flex-gap{
+    gap:10px;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container pt-4">
+<div class="container pt-4 flex-gap">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <h4 class="text-center alert bg-primary">Add/Update Data</h4>
-            <div class="jumbotron">
+            <!-- <div class="jumbotron"> -->
                 <h3>User Form</h3>
                 <form action="" method="POST">
                     {% csrf_token %}
@@ -28,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                         {% for err in form.password.errors %}
                         <small class="text-danger">{{err}}</small>
                         {% endfor %}
@@ -38,11 +43,11 @@
                         <!-- <input class="btn btn-success" type="submit" id="add" value="Add"> -->
                     </div>
                 </form>
-            </div>
+            <!-- </div> -->
         </div>
-        <div class="col-sm-7">
+        <div class="col-md-7">
             <h4 class="text-center alert alert-primary">Show User Data</h4>
-            <table class="table table-hover table-responsive-sm">
+            <table class="table table-hover table-responsive-sm table-responsive-md">
                <thead class="thead-dark">
                    <tr>
                        <th scope="col">ID</th>

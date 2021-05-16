@@ -1,6 +1,9 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render,redirect
 from .models import User
 from .forms import UserForm
+#u can bypass csrf security using csrf_exempt decorator over the post request function
+# from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def index(request):
     context = {}
@@ -19,4 +22,14 @@ def index(request):
     return render(request,'enroll/index.html',{'form':form,'obj':obj})
 
 def add(request):
-    pass
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            name = request.POST['name']
+            email = request.POST['email']
+            password = request.POST['password']
+            obj = User(name=name,email=email,password=password)
+            obj.save()
+            return JsonResponse({'status':'data saved'})
+        else:
+            return JsonResponse({'status':'data saving failed'})

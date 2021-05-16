@@ -5,6 +5,8 @@ $("#add").click(function(event){
     let name = $("#name").val();
     let email = $("#email").val();
     let pass = $("#password").val();
+    let csr = $("input[name=csrfmiddlewaretoken]").val();
+    console.log(csr);
     if(name == ""){
         console.log("error 1");
     }else if(email == ""){
@@ -16,15 +18,16 @@ $("#add").click(function(event){
         console.log(email);
         console.log(pass);
         data = {
-           'name':name,
-           'email':email,
-           'password':pass 
+           csrfmiddlewaretoken: csr,
+           name: name,
+           email: email,
+           password: pass
         };
         $.ajax({
             url : "{% url 'add' %}",
             method: "POST",
             dataType:'json',
-            data = JSON.stringify({'data':data}),
+            data : data,
             success: function(data){
                 console.log(data);
             },
