@@ -36,3 +36,12 @@ def add(request):
             return JsonResponse({'status':'data saved','read':read_list})
         else:
             return JsonResponse({'status':'data saving failed'})
+
+def dele(request):
+    if request.method == "POST":
+        id = request.POST.get('sid')
+        pi = User.objects.get(pk=id)
+        pi.delete()
+        return JsonResponse({'status':'deleted'})
+    else:
+        return JsonResponse({'status':0})

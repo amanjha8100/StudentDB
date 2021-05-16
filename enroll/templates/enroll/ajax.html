@@ -1,4 +1,5 @@
 <script>
+//insert data and add to list
 $("#add").click(function(event){
     event.preventDefault();
     output="";
@@ -37,7 +38,7 @@ $("#add").click(function(event){
                     let re = data.read
                     for(let i=0;i<re.length;i++)
                     {
-                        output += "<tr><td>" + re[i].id + "</td><td>" + re[i].name + "</td><td>" + re[i].email + "</td><td>" + re[i].password + "</td><td> <button type='submit' data-sid=" + re[i].id + " class='btn btn-warning btn-sm' id='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> <button type='submit' data-sid=" + re[i].id + " class='btn btn-danger btn-sm' id='delete'><i class='fa fa-trash' aria-hidden='true'></i></button> </td></tr>";
+                        output += "<tr><td>" + re[i].id + "</td><td>" + re[i].name + "</td><td>" + re[i].email + "</td><td>" + re[i].password + "</td><td> <button type='submit' data-sid=" + re[i].id + " class='btn btn-warning btn-sm btn-edit' id='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> <button type='submit' data-sid=" + re[i].id + " class='btn btn-danger btn-sm btn-del' id='delete'><i class='fa fa-trash' aria-hidden='true'></i></button> </td></tr>";
                     }
                     $("#tbody").html(output);
                     $("form")[0].reset();
@@ -48,6 +49,31 @@ $("#add").click(function(event){
         });
     }
     
+});
+//delete data
+$("#tbody").on("click",".btn-del",function(event){
+    event.preventDefault();
+    //console.log("Delete button clicked");
+    let id = $(this).attr("data-sid");
+    //console.log(id);
+    let csr = $("input[name=csrfmiddlewaretoken]").val();
+    mydata = {sid:id,csrfmiddlewaretoken:csr}
+    mythis = this;
+    $.ajax({
+        url:"{% url 'delete' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+            //console.log(data);
+            if(data.status == "deleted"){
+                console.log("Data deleted");
+                $(mythis).closest("tr").fadeOut();
+            }
+            if(data.status == 0){
+                console.log("Unable to data deleted");
+            }
+        }
+    });
 });
 
 //variables from form
