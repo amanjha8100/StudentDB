@@ -57,7 +57,7 @@
                        <th scope="col">Action</th>
                    </tr>
                </thead> 
-               <tbody>
+               <tbody id="tbody">
                    {% for ob in obj %}
                    <tr>
                        <td>{{ob.pk}}</td>
@@ -65,8 +65,8 @@
                        <td>{{ob.email}}</td>
                        <td>{{ob.password}}</td>
                        <td>
-                           <button type="submit" data-sid="{{ob.pk}}" class="btn btn-warning btn-sm" id="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                           <button type="submit" data-sid="{{ob.pk}}" class="btn btn-danger btn-sm" id="delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                           <button type="submit" data-sid="{{ob.id}}" class="btn btn-warning btn-sm" id="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                           <button type="submit" data-sid="{{ob.id}}" class="btn btn-danger btn-sm" id="delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>
                    </tr>
                    {% endfor %}

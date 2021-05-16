@@ -30,6 +30,9 @@ def add(request):
             password = request.POST['password']
             obj = User(name=name,email=email,password=password)
             obj.save()
-            return JsonResponse({'status':'data saved'})
+            read = User.objects.values()
+            read_list = list(read)
+            # print(read_list)
+            return JsonResponse({'status':'data saved','read':read_list})
         else:
             return JsonResponse({'status':'data saving failed'})
