@@ -5,6 +5,7 @@ $("#add").click(function(event){
     output="";
     console.log("button clicked add");
     let name = $("#name").val();
+    let id = $("#studid").val();
     let email = $("#email").val();
     let pass = $("#password").val();
     let csr = $("input[name=csrfmiddlewaretoken]").val();
@@ -21,6 +22,7 @@ $("#add").click(function(event){
         console.log(pass);
         data = {
            csrfmiddlewaretoken: csr,
+           id:id,
            name: name,
            email: email,
            password: pass
@@ -47,6 +49,7 @@ $("#add").click(function(event){
             },
 
         });
+        $("#studid").val('');
     }
     
 });
@@ -63,6 +66,7 @@ $("#tbody").on("click",".btn-del",function(event){
         url:"{% url 'delete' %}",
         method:"POST",
         data:mydata,
+        dataType:"json",
         success:function(data){
             //console.log(data);
             if(data.status == "deleted"){
@@ -75,6 +79,29 @@ $("#tbody").on("click",".btn-del",function(event){
         }
     });
 });
+//edit data
+$("#tbody").on("click",".btn-edit",function(event){
+    event.preventDefault();
+    console.log("Delete button clicked");
+    let id = $(this).attr("data-sid");
+    //console.log(id);
+    let csr = $("input[name=csrfmiddlewaretoken]").val();
+    mydata = {sid:id,csrfmiddlewaretoken:csr}
+    // mythis = this;
+    $.ajax({
+        url:"{% url 'edit' %}",
+        method:"POST",
+        data:mydata,
+        dataType:"json",
+        success:function(data){
+            console.log(data);
+            $("#studid").val(data.id);
+            $("#name").val(data.name);
+            $("#email").val(data.email);
+            $("#password").val(data.password);
 
+        }
+    });
+});
 //variables from form
 </script>
