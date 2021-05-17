@@ -7,25 +7,31 @@ $("#add").click(function(event){
     let name = $("#name").val();
     let id = $("#studid").val();
     let email = $("#email").val();
-    let pass = $("#password").val();
+    let roll = $("#roll").val();
     let csr = $("input[name=csrfmiddlewaretoken]").val();
     console.log(csr);
     if(name == ""){
         console.log("error 1");
+        $("#msg").text("Name Field Absent");
+        $("#msg").show();
     }else if(email == ""){
         console.log("error 2");
-    }else if(pass == ""){
+        $("#msg").text("Email Field absent/incorrect format.");
+        $("#msg").show();
+    }else if(roll == ""){
         console.log("error 3");
+        $("#msg").text("Roll field absent/incorrect input.");
+        $("#msg").show();
     }else{
         console.log(name);
         console.log(email);
-        console.log(pass);
+        console.log(roll);
         data = {
            csrfmiddlewaretoken: csr,
            id:id,
            name: name,
            email: email,
-           password: pass
+           roll: roll
         };
         $.ajax({
             url : "{% url 'add' %}",
@@ -35,16 +41,24 @@ $("#add").click(function(event){
             success: function(data){
                 console.log(data);
                 if(data.status == "data saved"){
-                    console.log("Form submitted successfully");
+                    $("#msg").text("Form submitted successfully");
+                    $("#msg").show();
+                    // console.log("Form submitted successfully");
                     // console.log(data.read)
                     let re = data.read
                     for(let i=0;i<re.length;i++)
                     {
-                        output += "<tr><td>" + re[i].id + "</td><td>" + re[i].name + "</td><td>" + re[i].email + "</td><td>" + re[i].password + "</td><td> <button type='submit' data-sid=" + re[i].id + " class='btn btn-warning btn-sm btn-edit' id='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> <button type='submit' data-sid=" + re[i].id + " class='btn btn-danger btn-sm btn-del' id='delete'><i class='fa fa-trash' aria-hidden='true'></i></button> </td></tr>";
+                        output += "<tr><td>" + re[i].id + "</td><td>" + re[i].name + "</td><td>" + re[i].email + "</td><td>" + re[i].roll + "</td><td> <button type='submit' data-sid=" + re[i].id + " class='btn btn-warning btn-sm btn-edit' id='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button> <button type='submit' data-sid=" + re[i].id + " class='btn btn-danger btn-sm btn-del' id='delete'><i class='fa fa-trash' aria-hidden='true'></i></button> </td></tr>";
                     }
                     $("#tbody").html(output);
                     $("form")[0].reset();
 
+                }
+                if(data.status==0){
+                    $("#msg").text("Unable to save data");
+                    $("#msg").show();
+                    $("#tbody").html(output);
+                    $("form")[0].reset();
                 }
             },
 
@@ -72,9 +86,13 @@ $("#tbody").on("click",".btn-del",function(event){
             if(data.status == "deleted"){
                 console.log("Data deleted");
                 $(mythis).closest("tr").fadeOut();
+                $("#msg").text("Data Deleted");
+                $("#msg").show();
             }
             if(data.status == 0){
                 console.log("Unable to data deleted");
+                $("#msg").text("Unable to delete data");
+                $("#msg").show();
             }
         }
     });
@@ -98,7 +116,7 @@ $("#tbody").on("click",".btn-edit",function(event){
             $("#studid").val(data.id);
             $("#name").val(data.name);
             $("#email").val(data.email);
-            $("#password").val(data.password);
+            $("#roll").val(data.roll);
 
         }
     });

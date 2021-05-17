@@ -27,13 +27,13 @@ def add(request):
         if form.is_valid():
             name = request.POST['name']
             email = request.POST['email']
-            password = request.POST['password']
+            roll = request.POST['roll']
             id = request.POST.get('id')
 
             if id == '':
-                obj = User(name=name,email=email,password=password)
+                obj = User(name=name,email=email,roll=roll)
             else:
-                obj = User(id=id,name=name,email=email,password=password)
+                obj = User(id=id,name=name,email=email,roll=roll)
             
             #if id is already present save edits it else adds new data to database
             obj.save()
@@ -42,7 +42,7 @@ def add(request):
             # print(read_list)
             return JsonResponse({'status':'data saved','read':read_list})
         else:
-            return JsonResponse({'status':'data saving failed'})
+            return JsonResponse({'status':0})
 
 def dele(request):
     if request.method == "POST":
@@ -58,7 +58,7 @@ def edit(request):
         id=request.POST.get('sid')
         print(id)
         stud = User.objects.get(pk=id)
-        stud_data = {"id":stud.id,"name":stud.name,"email":stud.email,"password":stud.password}
+        stud_data = {"id":stud.id,"name":stud.name,"email":stud.email,"roll":stud.roll}
         return JsonResponse(stud_data)
     else:
         return JsonResponse({"status":0})
