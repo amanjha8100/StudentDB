@@ -13,4 +13,4 @@ The application has a very simple functionality hence it was not deployed.
 
 ## Screenshot 
 
-<img src="StudentDB.png" alt="screenshot">
+![alt text](https://github.com/amanjha8100/StudentDB/blob/main/StudentDB.PNG?raw=true)
